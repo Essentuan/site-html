@@ -1,0 +1,77 @@
+<title>Endangered Species Project</title>
+<div id="nav1"></div>
+<head>
+	<link rel="stylesheet" href="/req/css/style.css">
+	<link rel="shortcut icon" type="image/png" href="https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico"/>
+</head>
+<meta charset="utf-8">
+	<style>
+		::-webkit-scrollbar {
+  		width: 0px;
+		}
+		.text-big {font-size: 40px}
+		.center {  
+  		position: absolute;
+  		top: 50%;
+  		left: 50%;
+ 			transform: translate(-50%, -50%);
+  		z-index: 2;
+			}
+			.bg-image {
+				  /* The image used */
+  				background-image: url("img/img1.jpg");
+  				height: 100%; 
+ 					background-position: center;
+ 					background-repeat: no-repeat;
+  				background-size: cover;
+			}
+	</style>
+	<script src="login.js"></script> 
+	<script src="/req/js/functions.js"></script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<body>
+<div id="nav" style="position: sticky; top: 0; z-index: 1;"></div>
+<div id="alerts" style="z-index: 10; width: 50%"></div>
+<login>
+<div class="bg-image"></div>
+<div class="container center" style="width: 28%; height: 45%" align="center">
+	<div class="card" style="height: 100%; width: 100%">
+		<div class="card-content">
+			<h3>Login</h3>
+			<div class="input-field">
+      	<input id="username" type="text">
+      	<label class="active" for="username">Username</label>
+    </div>
+		<div class="input-field">
+      	<input id="pwd" type="password">
+      	<label class="active" for="pwd">Login</label>
+    </div>
+		<button class="btn" id="submit">Submit</button>
+		</div>
+	</div>
+</div>
+</login>
+</body>
+<div id="footer1"></div>
+<script>
+$('#nav').load('/req/html/nav.html');
+	$('#nav1').load('/req/html/sidenav.html');
+$('#footer1').load('/req/html/footer.html');
+$("#submit").click(function(){
+		if (login(document.getElementById("username").value, document.getElementById("pwd").value)) {
+    	$("body").empty();
+			$(function(){
+     		$("body").load("html/mainmenu.html"); 
+    	});
+		} else {
+			alerts(1.5, "Incorrect username/password.", "danger")
+		}
+});
+$(window).scroll(function() {
+   window.scrollTo(0, 0);
+});
+</script>

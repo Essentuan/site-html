@@ -1,0 +1,43 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="navbar">
+	<nav>
+  	<div class="nav-wrapper grey darken-3">
+    	<a href="/" class="brand-logo" style="margin-left: 1%">Essentuan's Site</a>
+    	<a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons" style="font-size: 3rem">menu</i></a>
+    	<ul class="right hide-on-med-and-down" style="margin-right: 1%">
+      	<li><a class="nav-link" href="/bypass">Bypass</a></li>
+      	<li><a href="/jose">Josephus Problem</a></li>
+      	<li><a class="nav-link" href="/prime">Prime Generator</a></li>
+				<li><a class='dropdown-lua' href='#' data-target='dropdown-lua'>Lua<i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropdown-lua' class='dropdown-content'>
+    			<li><a href="/lua/prime">Prime Generator</a></li>
+    			<li><a href="/lua/markov">Markov Bot</a></li>
+					<li><a href="/lua/fizzbuzz">Fizzbuzz</a></li>
+				</ul>
+				<li><a class='dropdown-python' href='#' data-target='dropdown-python'>Python<i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropdown-python' class='dropdown-content'>
+    			<li><a href="/python/prime">Prime Generator</a></li>
+    			<li><a href="/python/jose">Josephus Problem</a></li>
+				</ul>
+    	</ul>
+ 		</div>
+	</nav>
+</div>
+<script>
+	$(document).ready(function(){
+    $('.sidenav').sidenav();
+		$('.dropdown-lua').dropdown({
+			coverTrigger: false,
+			constrainWidth: false,
+		});
+		$('.dropdown-python').dropdown({
+			coverTrigger: false,
+			constrainWidth: false,
+		});
+  });
+</script>
+        

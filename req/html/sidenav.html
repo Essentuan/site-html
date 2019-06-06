@@ -1,0 +1,29 @@
+<ul class="sidenav" id="mobile-nav">
+	<a style="color: #4A4A4A" href="/"><h4 id="side-header">Essentuan's Site</h4></a>
+	<li><div class="divider"></div></li>
+      	<li><a class="nav-link" href="/bypass">Bypass</a></li>
+      	<li><a href="/jose">Josephus Problem</a></li>
+      	<li><a class="nav-link" href="/prime">Prime Generator</a></li>
+				<li><a class='dropdown-lua' href='#' data-target='dropdown-lua1'>Lua<i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropdown-lua1' class='dropdown-content'>
+    			<li><a href="/lua/prime">Prime Generator</a></li>
+    			<li><a href="/lua/markov">Markov Bot</a></li>
+					<li><a href="/lua/fizzbuzz">Fizzbuzz</a></li>
+				</ul>
+				<li><a class='dropdown-python' href='#' data-target='dropdown-python1'>Python<i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropdown-python1' class='dropdown-content'>
+    			<li><a href="/python/prime">Prime Generator</a></li>
+    			<li><a href="/python/jose">Josephus Problem</a></li>
+				</ul>
+</ul>
+<script>
+	$(document).ready(function(){
+    $('.sidenav').sidenav();
+		$('.dropdown-lua1').dropdown({
+			coverTrigger: false,
+		});
+		$('.dropdown-python1').dropdown({
+			coverTrigger: false,
+		});
+  });
+</script>

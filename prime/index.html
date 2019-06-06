@@ -1,0 +1,122 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="/req/css/style.css">
+<script src="/req/js/functions.js"></script>
+<title>Prime Generator - Essentuan</title>
+<div id="nav1"></div>
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Prime Generator</h1>
+</div>
+<div id="nav1" style="position: sticky; top: 0; z-index: 1;"><div id="nav"></div>
+  <div class="progress" style="margin-left: 1%; margin-top: 5px; width: 98%" id="progressContainer">
+    <div class="determinate" style="width:0%; transition: 0s width" id="progressBar"></div>
+  </div>
+</div>
+<div id="footer1"><div id="footer"></div></div>
+<div class="container" style="margin-bottom: 3%">
+  <div class="row">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12" id="numboxb" style="width: 75%; transition: 0.3s width">
+          <input type="number" id="number" autocomplete="off">
+					<label for="number">Type a number</label>
+        </div>
+				<div class="input-field col s12" id="genselb" style="width: 20%; transition: 0.3s width">
+    			<select id="type">
+      			<option value="none" disabled selected>Select an option</option>
+      			<option value="generate">Generate</option>
+      			<option value="check">Check</option>
+    			</select>
+    			<label>Generation Style</label>
+  			</div>
+      </div>
+    </form>
+  </div>
+  <div class="switch" style="position: relative; top: -50">
+    <label>
+      <input type="checkbox" id="smtr">
+      <span class="lever"></span>
+			Smooth Render
+    </label>
+		<button style="float: right" class="btn btn-info" id="start">Continue</button>
+  </div>
+</div>
+<hr>
+<button id="bottom" class="btn btn-info" style="margin-bottom: 1%; float: right; margin-right: 1%">Go to Bottom</button>
+<h3>Output</h3>
+<div id="result"></div>
+<hr>
+<button id="clear" class="btn btn-info" style="margin-left: 1%; margin-bottom: 1%">Clear</button>
+<button id="top" class="btn btn-info" style="margin-bottom: 1%; float: right; margin-right: 1%">Go to Top</button>
+<div id="alerts" style="z-index: 10; width: 50%"></div>
+<script>
+	let win = $(window)
+	win.resize(function() {
+		if (win.width() <= 992) {
+			document.getElementById("numboxb").style.width = "50%";
+			document.getElementById("genselb").style.width = "50%";
+		} else {
+			document.getElementById("numboxb").style.width = "75%"
+			document.getElementById("genselb").style.width = "20%"
+		}
+	})
+	$(document).ready(function(){
+    $('select').formSelect();
+  });
+  function perc(x, y) {
+    return((x/y) * 100)
+  }
+	$("#progressContainer").fadeTo(0, 0);	
+	$("#start").click(function(){
+		let selected = document.getElementById("type").value
+    let check = document.getElementById("smtr").checked
+    let num = parseInt($('#number').val())
+    if ($('#number').val().length == 0) {
+      alerts(3, "Please type a number", "danger")
+		} else if (selected == "none") {
+			alerts(3, "Please select Generate or Check", "danger")
+		} else if (selected == "check") {
+			add(prime(num), "result")
+			alerts(3, "Finished Calculating", "success")
+		} else if (selected == "generate" && !check)  {
+      $('#result').html("")
+      let primes = prime2(num)
+      for (let i = 1; i <= parseInt($('#number').val()); i++) {
+        add(primes[i], "result")
+      }
+      alerts(3, "Finished Calculating", "success")   
+    } else if (selected == "generate" && check) {
+        $("#progressContainer").fadeTo(0.1, 1);
+      $('#result').html("")
+      let cur = 1
+      let primes = prime2(num)
+      let gen = setInterval(next, 0)
+      function next() {
+       if (cur <= num) {
+         add(primes[cur], "result")
+         $("#progressBar").width(perc(cur, num) + "%")
+         $('#progressBar').html(Math.floor(perc(cur, num)) + "% complete")
+       } else {
+         clearInterval(gen)
+         alerts(3, "Finished Calculating", "success")
+       }
+       cur++
+      }
+    }
+	});
+	$("#clear").click(function() {
+		$('#result').html("")
+    $("#progressContainer").fadeTo(300, 0);
+	});
+  $('#nav').load('/req/html/nav.html');
+	 $('#nav1').load('/req/html/sidenav.html');
+  $('#footer').load('/req/html/footer.html');
+  $("#bottom").click(function() {
+    $('html, body').animate({scrollTop:$(document).height()}, "fast");
+  });
+  $("#top").click(function() {
+    $('html, body').animate({scrollTop:0}, 'fast');
+  });
+</script>

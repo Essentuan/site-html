@@ -1,0 +1,92 @@
+  <meta charset="utf-8">
+	<link rel="stylesheet" href="../../req/css/style.css">
+	<style>
+		::-webkit-scrollbar {
+  		width: 0px;
+		}
+		.text-big {font-size: 40px}
+		.center {  
+  		position: absolute;
+  		top: 50%;
+  		left: 50%;
+ 			transform: translate(-50%, -150%);
+  		z-index: 2;
+			}
+			.bg-image {
+				  /* The image used */
+  				background-image: url("img/img1.jpg");
+  				height: 100%; 
+ 					background-position: center;
+ 					background-repeat: no-repeat;
+  				background-size: cover;
+			}
+			.change {transition: 0.5s}
+	</style>
+	<script src="js/function.js"></script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<body>
+<div id="nav" style="position: sticky; top: 0; z-index: 1;"></div>
+<div id="footer1"></div>
+<div id="alerts" style="z-index: 10; width: 50%"></div>
+<div id="sitevalue" style="font-size:0px"></div>
+<login>
+<div class="bg-image"></div>
+<div class="container">
+	<div class="card center change" style="width: 50%; height: 50%" id="card">
+		<div class="card-body">
+			<div class="text-big" align="center" style="padding-top: 1%">
+				Welcome Back!
+			</div>
+			<p>
+			Welcome to this feature. This feature allows you to bypass most sites! Please click one of the buttons below or type in a url.
+			</p>
+			<small>some urls may not work</small>
+			<div class="row">
+				<div class="col s12">
+					<div class="input-label" style="width: 7.5%; position: relative; top: 61px; left: 26px">
+						https://
+					</div>
+     			<div class="input-field inline" style="width: 90%; position: relative; left: 5%">
+      			<input id="inputURL" type="text">
+      			<label class="active" for="inputURL" style="margin-left: 1%">Type a URL</label>
+    			</div>
+				</div>
+			</div>
+			<button type="button" class="btn btn-info" style="margin-left: 1%" id="search">Go to</button>
+			<button type="button" class="btn btn-info" style="margin-top: 6%; float: left; margin-left: 1%" id="bypass1">Bypass #1</button>
+			<button type="button" class="btn btn-info" style="margin-top: 6%; float: right; margin-right: 1%" id="bypass3">Bypass #2</button>
+			</div>
+		</div>
+	</div>
+</div>
+</login>
+</body>
+<script>
+$('#nav').load('/../req/html/nav.html');
+$('#footer').load('/../req/html/footer.html');
+$("#bypass1").click(function(){
+  $("login").empty();
+	$(function(){
+    $("login").load("html/bypass1.html"); 
+  });
+});
+$("#bypass2").click(function(){
+  $("login").empty();
+	$(function(){
+    $("login").load("html/bypass2.html"); 
+  });
+});
+$("#search").click(function(){
+	$(function(){
+		document.getElementById("sitevalue").innerHTML = "https://" + document.getElementById("inputURL").value;
+    $("login").load("html/search.html"); 
+  });
+	window.setTimeout(setURL, 500);
+})
+$(document).ready(function() {
+  document.getElementById("card").style.width = "75%";
+});
+function setURL() {
+	document.getElementById("iframe").src = document.getElementById("sitevalue").innerHTML;
+}
+</script>
