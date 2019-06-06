@@ -3,6 +3,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link rel="stylesheet" href="/req/css/style.css">
+<base target="_parent">
 <title>Error 404 - Essentuan</title>
 <div id="nav1"></div>
 <div class="jumbotron" style="margin-bottom:0">
@@ -21,6 +22,6 @@
   $('#nav1').load('/req/html/sidenav.html');
   $('#footer1').load('/req/html/footer.html');
   $('#back').click(function() {
-    window.history.back();
+    window.top.history.back();
   })
 </script>
