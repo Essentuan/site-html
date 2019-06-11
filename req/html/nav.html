@@ -38,6 +38,10 @@
 			coverTrigger: false,
 			constrainWidth: false,
 		});
+	document.getElementById("footer1").style.top = $(window).height() - 60
+	$( window ).resize(function() {
+		document.getElementById("footer1").style.top = $(window).height() - 60
+	});
   });
 </script>
         

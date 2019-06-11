@@ -9,13 +9,13 @@
 <div class="jumbotron text-center" style="margin-bottom:0">
   <h1>Prime Generator</h1>
 </div>
-<div id="nav1" style="position: sticky; top: 0; z-index: 1;"><div id="nav"></div>
+<div id="nav1" style="position: sticky; top: 0; z-index: 999;"><div id="nav"></div>
   <div class="progress" style="margin-left: 1%; margin-top: 5px; width: 98%" id="progressContainer">
     <div class="determinate" style="width:0%; transition: 0s width" id="progressBar"></div>
   </div>
 </div>
 <div id="footer1"><div id="footer"></div></div>
-<div class="container" style="margin-bottom: 3%">
+<div class="container" style="margin-bottom: 3%; z-index: 0!important">
   <div class="row">
     <form class="col s12">
       <div class="row">
@@ -25,9 +25,9 @@
         </div>
 				<div class="input-field col s12" id="genselb" style="width: 20%; transition: 0.3s width">
     			<select id="type">
-      			<option value="none" disabled selected>Select an option</option>
-      			<option value="generate">Generate</option>
-      			<option value="check">Check</option>
+      			  <option value="none" disabled selected>Select an option</option>
+      			  <option value="generate">Generate</option>
+              <option value="check">Check</option>
     			</select>
     			<label>Generation Style</label>
   			</div>
@@ -48,8 +48,10 @@
 <h3>Output</h3>
 <div id="result"></div>
 <hr>
-<button id="clear" class="btn waves-effect waves-light" style="margin-left: 1%; margin-bottom: 1%">Clear</button>
-<button id="top" class="btn waves-effect waves-light" style="margin-bottom: 1%; float: right; margin-right: 1%">Go to Top</button>
+<div style="margin-bottom: 50px">
+  <button id="clear" class="btn waves-effect waves-light" style="margin-left: 1%; margin-bottom: 1%">Clear</button>
+  <button id="top" class="btn waves-effect waves-light" style="margin-bottom: 1%; float: right; margin-right: 1%">Go to Top</button>
+</div>
 <div id="alerts" style="z-index: 10; width: 50%"></div>
 <script>
 	let win = $(window)

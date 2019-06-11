@@ -6,6 +6,7 @@ function add(text, out) {
 	let br = document.createElement('br');
 	document.getElementById(out).appendChild(br);
 	document.getElementById(out).appendChild(cont);
+	document.getElementById("footer1").style.top = $(window).height() - 60
 }
 function prime(num) {
 	let stop = num % 2 == 0 || num == 1
