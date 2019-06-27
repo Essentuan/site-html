@@ -38,7 +38,7 @@
 <div id="alerts" style="z-index: 10; width: 50%"></div>
 <login>
 <div class="bg-image"></div>
-<div class="container center" style="width: 28%; height: 45%" align="center">
+<div class="container center" style="width: 28%; height: 45%" align="center" id="card">
 	<div class="card" style="height: 100%; width: 100%">
 		<div class="card-content">
 			<h3>Login</h3>
@@ -58,6 +58,14 @@
 </body>
 <div id="footer1"></div>
 <script>
+let win = $(window)
+win.resize(function() {
+	if (win.width() <= 992) {
+		document.getElementById("card").style.width = "75%";
+	} else {
+		document.getElementById("card").style.width = "28%";
+	}
+})
 $('#nav').load('/req/html/nav.html');
 	$('#nav1').load('/req/html/sidenav.html');
 $('#footer1').load('/req/html/footer.html');
