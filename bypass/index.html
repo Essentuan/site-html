@@ -69,6 +69,13 @@ win.resize(function() {
 		document.getElementById("card").style.width = "28%";
 	}
 })
+$(document).ready(function() {
+	if (win.width() <= 992) {
+		document.getElementById("card").style.width = "75%";
+	} else {
+		document.getElementById("card").style.width = "28%";
+	}
+})
 $('#nav').load('/req/html/nav.html');
 	$('#nav1').load('/req/html/sidenav.html');
 $('#footer1').load('/req/html/footer.html');
