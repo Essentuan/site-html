@@ -66,6 +66,13 @@
 	})
 	$(document).ready(function(){
     $('select').formSelect();
+    if (win.width() <= 992) {
+			document.getElementById("numboxb").style.width = "50%";
+			document.getElementById("genselb").style.width = "50%";
+		} else {
+			document.getElementById("numboxb").style.width = "75%"
+			document.getElementById("genselb").style.width = "20%"
+		}
   });
   function perc(x, y) {
     return((x/y) * 100)
