@@ -5,11 +5,21 @@
 </head>
 <meta charset="utf-8">
 	<style>
+		.btn-text {
+			background-color: white;
+			border-width: 0px;
+		}
+		.btn-text:hover {
+			cursor: pointer
+		}
+		.btn-text::selection {
+			background-color: white
+		}
 		#card {
 			transition: 0.3s
 		}
 		::-webkit-scrollbar {
-  		width: 0px;
+			width: 0px
 		}
 		.text-big {font-size: 40px}
 		.center {  
@@ -17,7 +27,7 @@
   		top: 50%;
   		left: 50%;
  			transform: translate(-50%, -50%);
-  		z-index: 2;
+  		z-index: 1;
 			}
 			.bg-image {
 				background-color: #26c6da;
@@ -27,7 +37,6 @@
   				background-size: cover;
 			}
 	</style>
-	<script src="login.js"></script> 
 	<script src="/req/js/functions.js"></script> 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -35,74 +44,52 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <body>
-<div id="nav" style="position: sticky; top: 0; z-index: 1;"></div>
+<div id="nav" style="position: sticky; top: 0; z-index: 10;"></div>
 <div id="alerts" style="z-index: 10; width: 50%"></div>
-<div class="bg-image"></div>
-<main>
-<div class="container center" style="width: 28%; height: 45%" align="center" id="card">
-	<div class="card" style="height: 100%; width: 100%">
-		<div class="card-content">
-			<h3>Login</h3>
-			<div class="input-field">
-      	<input id="username" type="text">
-      	<label class="active" for="username">Username</label>
-    </div>
-		<div class="input-field">
-      	<input id="pwd" type="password">
-      	<label class="active" for="pwd">Password</label>
-    </div>
-		<button class="btn waves-effect waves-light" id="submit">Submit</button>
-		</div>
-	</div>
-</div>
-</main>
+<main></main>
+<div class="bg-image" id="background"></div>
 </body>
 <div id="footer1"></div>
-<script>
-let win = $(window)
-win.resize(function() {
-	if (win.width() <= 992) {
-		document.getElementById("card").style.width = "75%";
-	} else {
-		document.getElementById("card").style.width = "28%";
-	}
-})
-$(document).ready(function() {
-	if (win.width() <= 992) {
-		document.getElementById("card").style.width = "75%";
-	} else {
-		document.getElementById("card").style.width = "28%";
-	}
-})
-$('#nav').load('/req/html/nav.html');
-	$('#nav1').load('/req/html/sidenav.html');
-$('#footer1').load('/req/html/footer.html');
-$("#submit").click(function(){
-    	//$("body").empty();
-     	//$("body").load("html/mainmenu.html"); 
-		//alerts(1.5, "Incorrect username/password.", "danger")
-});
-$(window).scroll(function() {
-   window.scrollTo(0, 0);
-});
-</script>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
-
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js"></script>
+<script src="database.js"></script> 
 <script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyAmHSuQJYzvtYS2A9XDClOXEG8AmTYPlcg",
-    authDomain: "chore-tracker-d1f1a.firebaseapp.com",
-    databaseURL: "https://chore-tracker-d1f1a.firebaseio.com",
-    projectId: "chore-tracker-d1f1a",
-    storageBucket: "",
-    messagingSenderId: "753280324287",
-    appId: "1:753280324287:web:5056f377699f269a"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
+	$("main").load("html/login.html"); 
+	let win = $(window)
+	win.resize(function() {
+		if (win.width() <= 992) {
+			document.getElementById("card").style.width = "75%";
+		} else {
+			document.getElementById("card").style.width = "28%";
+		}
+	})
+	$(document).ready(function() {
+		if (win.width() <= 992) {
+			document.getElementById("card").style.width = "75%";
+		} else {
+			document.getElementById("card").style.width = "28%";
+		}
+	})
+	$('#nav').load('/req/html/nav.html');
+		$('#nav1').load('/req/html/sidenav.html');
+	$('#footer1').load('/req/html/footer.html');
+	$("#login").click(function(){
+		let username = $('#username').val()
+		let password = $('#password').val()
+		if (username.length > 0 && password.length > 0) {
+			login(username, password)
+		} else {
+			M.toast({html: "<span>Incorrect username/password</span>"});
+		}
+
+		//addData(username, password)
+			//$("body").empty();
+			 //$("body").load("html/mainmenu.html"); 
+			//alerts(1.5, "Incorrect username/password.", "danger")
+			
+	});
+	//$("#createA").click(function(){
+		//M.toast({html: "<span>Incorrect username/password</span>"});
+	//});
+	</script>

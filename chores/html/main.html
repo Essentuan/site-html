@@ -1,0 +1,39 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<style>
+.tabs .tab a{
+    color: #90caf9;
+}
+.tabs .tab a:hover,.tabs .tab a.active {
+	background-color:transparent;
+	color:#008B9B;
+}
+.tabs .indicator {
+    background-color:#009BAD;
+}
+.tabs .tab a:focus.active {
+    color:#26a69a;
+    background-color: rgba(55, 55, 55, 0.2);
+}
+
+</style>
+<div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s3"><a class="active" href="#test1">Names</a></li>
+            <li class="tab col s3"><a href="#test2">Chores</a></li>
+            <li class="tab col s3"><a href="#test3">Assign Chores</a></li>
+          </ul>
+        </div>
+        <div id="test1" class="col s12">Test 1</div>
+        <div id="test2" class="col s12">Test 2</div>
+        <div id="test3" class="col s12">Test 3</div>
+      </div>
+<script>
+  $(document).ready(function(){
+    $('.tabs').tabs();
+  });
+</script> 
+            

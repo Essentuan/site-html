@@ -1,0 +1,37 @@
+<div class="container center" style="width: 28%; height: 486px; z-index=1" align="center" id="card">
+	<div class="card" style="height: 100%; width: 100%">
+		<div class="card-content">
+			<h3>Login</h3>
+			<div class="input-field">
+      	<input id="username" type="text">
+      	<label class="active" for="username">Username</label>
+    </div>
+		<div class="input-field">
+      	<input id="password" type="password">
+      	<label class="active" for="pwd">Password</label>
+    </div>
+		<button class="btn waves-effect waves-light" id="login">Login</button>
+		</div>
+	</div>
+	<h5 style="position: relative; top: -70px;"><button class="btn-text toast-action waves-effect" style="background-color: white; height: 10%" id="createA">Create an Account</button></h5>
+</div>
+<script>
+	$("#login").click(function(){
+		let username = $('#username').val()
+		let password = $('#password').val()
+		if (username.length > 0 && password.length > 0) {
+			login(username, password)
+		} else {
+			M.toast({html: "<span>Incorrect username/password</span>"});
+		}
+		//addData(username, password)
+			//$("body").empty();
+			 //$("body").load("html/mainmenu.html"); 
+			//alerts(1.5, "Incorrect username/password.", "danger")
+	});
+	$("#createA").click(function(){
+		//M.toast({html: "<span>Incorrect username/password</span>"});
+		switchCreate()
+	});
+	</script
+</script>
