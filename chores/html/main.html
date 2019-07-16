@@ -65,7 +65,7 @@
   }
   function editN(el) {
     neid = $(el).attr('id').substring(5, $(el).attr('id').length)
-    $('#nameEdit').val($('#header' + neid).html())
+    $('#nameEdit').val($('#nheader' + neid).html())
   }
   function finishEditingN() {
     if ($('#nameEdit').val().length > 0) {
