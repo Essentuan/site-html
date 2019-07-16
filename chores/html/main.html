@@ -56,7 +56,7 @@
   let neid = ""
   function removeN(el) {
     let id = $(el).attr('id').substring(7, $(el).attr('id').length)
-    if (confirm("Are you sure you want to remove '" + $('#header' + id).html() + "' from the list of names?") == true) {
+    if (confirm("Are you sure you want to remove '" + $('#nheader' + id).html() + "' from the list of names?") == true) {
       $('#popout' + id).fadeTo( "0.3s", 0);
       setTimeout(function(){
         $('#name' + id).remove()
