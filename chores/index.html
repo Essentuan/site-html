@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="/req/css/style.css">
 </head>
 <meta charset="utf-8">
-	<style>
+<style>
 		.btn-text {
 			background-color: white;
 			border-width: 0px;
@@ -29,14 +29,18 @@
  			transform: translate(-50%, -50%);
   		z-index: 1;
 			}
-			.bg-image {
+	.bg-image {
 				background-color: #26c6da;
   				height: 94.17%; 
  					background-position: center;
  					background-repeat: no-repeat;
   				background-size: cover;
-			}
-	</style>
+	}
+	html, body {
+    	max-width: 100%;
+    	overflow-x: hidden;
+	}
+</style>
 	<script src="/req/js/functions.js"></script> 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -65,15 +69,17 @@
 		}
 	})
 	$(document).ready(function() {
-		if (win.width() <= 992) {
-			document.getElementById("card").style.width = "75%";
-		} else {
-			document.getElementById("card").style.width = "28%";
-		}
+		setTimeout(function(){
+			if (win.width() <= 992) {
+				document.getElementById("card").style.width = "75%";
+			} else {
+				document.getElementById("card").style.width = "28%";
+			}
+		}, 100);
 	})
 	$('#nav').load('/req/html/nav.html');
 		$('#nav1').load('/req/html/sidenav.html');
-	$('#footer1').load('/req/html/footer.html');
+	//$('#footer1').load('/req/html/footer.html');
 	$("#login").click(function(){
 		let username = $('#username').val()
 		let password = $('#password').val()

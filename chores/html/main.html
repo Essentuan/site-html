@@ -3,37 +3,111 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <style>
-.tabs .tab a{
-    color: #90caf9;
+.fading {
+  opacity: 0;
 }
-.tabs .tab a:hover,.tabs .tab a.active {
-	background-color:transparent;
-	color:#008B9B;
-}
-.tabs .indicator {
-    background-color:#009BAD;
-}
-.tabs .tab a:focus.active {
-    color:#26a69a;
-    background-color: rgba(55, 55, 55, 0.2);
-}
-
 </style>
+<modal>
+  <div id="nedit" class="modal">
+      <div class="modal-content">
+        <h4 id="neh">Editing</h4>
+        <input id="nameEdit" type="text">
+      </div>
+      <div class="modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat" onClick="finishEditingN()">Finish Editing</a>
+        <a class="modal-close waves-effect waves-red btn-flat" style="float: left;">Cancel</a>
+      </div>
+    </div>
+  <script>
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+  </script>                   
+</modal>  
 <div class="row">
         <div class="col s12">
           <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#test1">Names</a></li>
-            <li class="tab col s3"><a href="#test2">Chores</a></li>
-            <li class="tab col s3"><a href="#test3">Assign Chores</a></li>
+            <li class="tab col s3"><a class="active" href="#names">Names</a></li>
+            <li class="tab col s3"><a href="#chores">Chores</a></li>
+            <li class="tab col s3"><a href="#achores">Assign Chores</a></li>
           </ul>
         </div>
-        <div id="test1" class="col s12">Test 1</div>
-        <div id="test2" class="col s12">Test 2</div>
-        <div id="test3" class="col s12">Test 3</div>
-      </div>
+        <div id="names" class="col s12">
+          <div class="row" style="position: relative; top: 40px; margin-bottom: 30px">
+            <div class="input-field col s5 offset-s3" id="ename">
+              <input id="namebox" type="text">
+              <label class="active" for="namebox">Enter a name</label>
+            </div>
+            <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addN">Add</button>
+          </div>
+          <div id="names"></div>
+        </div>
+        <div id="chores" class="col s12">
+          <div class="row" style="position: relative; top: 40px">
+            <div class="input-field col s5 offset-s3">
+              <input id="chorebox" type="text">
+              <label class="active" for="chorebox">Enter a chore</label>
+            </div>
+            <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px">Add</button>
+          </div>
+        </div>
+        <div id="achores" class="col s12"></div>
 <script>
+  let neid = ""
+  function removeN(el) {
+    let id = $(el).attr('id').substring(7, $(el).attr('id').length)
+    if (confirm("Are you sure you want to remove '" + $('#header' + id).html() + "' from the list of names?") == true) {
+      $('#popout' + id).fadeTo( "0.3s", 0);
+      setTimeout(function(){
+        $('#name' + id).remove()
+      }, 301);
+    }
+  }
+  function editN(el) {
+    neid = $(el).attr('id').substring(5, $(el).attr('id').length)
+    $('#nameEdit').val($('#header' + neid).html())
+  }
+  function finishEditingN() {
+    if ($('#nameEdit').val().length > 0) {
+      $('#nheader' + neid).html($('#nameEdit').val())
+    } else {
+      M.toast({html: "<span>Invalid Name</span>"});
+    }
+  }
+  let nid = 0
   $(document).ready(function(){
     $('.tabs').tabs();
   });
+  $("#addN").click(function(){
+    let name = $('#namebox').val()
+    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 nsize"><ul id="popout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button onClick="removeN(this)" class="btn red waves-effect waves-light" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
+    if (name.length > 0) {
+      $('#names').append(preset)
+      $('.collapsible').collapsible();
+      $('.fading').fadeTo( "0.3s", 1);
+      nid++
+      if (nid > 9) {
+        resize()
+      }
+      resize()
+    } else {
+      M.toast({html: "<span>Invalid Name</span>"});
+    }
+  });
+  let win1 = $(window)
+  function resize() {
+    if (win1.width() <= 992) {
+      document.getElementById("addN").className = "btn col s2 waves-effect waves-light"
+      document.getElementById("ename").className = "input-field col s9"
+      $( ".nsize" ).removeClass( "s5 offset-s3" ).addClass( "s12" );
+		} else {
+      document.getElementById("addN").className = "btn col s1 waves-effect waves-light"
+      document.getElementById("ename").className = "input-field col s5 offset-s3"
+      $( ".nsize" ).removeClass( "s12" ).addClass( "s5 offset-s3" );
+		}
+  }
+	win1.resize(function() {
+    resize()
+  })
 </script> 
             

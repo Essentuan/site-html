@@ -9,10 +9,11 @@ let firebaseConfig = {
   appId: "1:753280324287:web:5056f377699f269a"
 };
 // Initialize Firebase
+let user = ""
 firebase.initializeApp(firebaseConfig);
 let data = firebase.firestore()
 function addData(username, password) {
-  let newData = {
+  let newLogin = {
     ps: password
   }
   var docRef = data.collection("LoginDetails").doc(username);
@@ -20,7 +21,7 @@ function addData(username, password) {
       if (doc.exists) {
         M.toast({html: "A user with that username already exists"});
       } else {
-        data.collection("LoginDetails").doc(username).set(newData);
+        data.collection("LoginDetails").doc(username).set(newLogin);
         M.toast({html: "Account Created"});
       }
     }).catch(function(error) {
@@ -32,7 +33,9 @@ function login(username, password) {
   docRef.get().then(function(doc) {
       if (doc.exists) {
           if (doc.data().ps == password) {
+            user = username
             M.toast({html: "<span>Logged in as " + username + "</span>"});
+            addFile()
             switchMain()
           } else {
             M.toast({html: "<span>Incorrect password</span>"});
@@ -57,4 +60,21 @@ function switchMain() {
   $("main").empty();
   $("main").load("html/main.html"); 
   $("#background").width(0)
+}
+function addFile(username) {
+  let newData = {
+    chores: [],
+    value: [],
+    names: [],
+  }
+  var docRef = data.collection("Data").doc(user);
+  docRef.get().then(function(doc) {
+      if (doc.exists) {
+        //load()
+      } else {
+        data.collection("Data").doc(user).set(newData);
+      }
+    }).catch(function(error) {
+         console.log("error")
+    });
 }
