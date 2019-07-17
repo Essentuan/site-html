@@ -23,6 +23,57 @@
       $('.modal').modal();
     });
   </script>                   
+</modal> 
+<modal>
+    <div id="nconfirm" class="modal">
+        <div class="modal-content">
+          <h4 id="nch">Confirmation</h4>
+          <p id="ncm"></p>
+        </div>
+        <div class="modal-footer">
+          <a class="modal-close waves-effect waves-red btn-flat" onClick="confirmationN()">Remove</a>
+          <a class="modal-close waves-effect waves-green btn-flat" style="float: left;">Cancel</a>
+        </div>
+      </div>
+    <script>
+      $(document).ready(function(){
+        $('.modal').modal();
+      });
+    </script>                   
+</modal>  
+<modal>
+    <div id="cedit" class="modal">
+        <div class="modal-content">
+          <h4 id="ceh">Editing</h4>
+          <input id="choreEdit" type="text">
+        </div>
+        <div class="modal-footer">
+          <a class="modal-close waves-effect waves-green btn-flat" onClick="finishEditingC()">Finish Editing</a>
+          <a class="modal-close waves-effect waves-red btn-flat" style="float: left;">Cancel</a>
+        </div>
+      </div>
+    <script>
+      $(document).ready(function(){
+        $('.modal').modal();
+      });
+    </script>                   
+  </modal> 
+  <modal>
+      <div id="cconfirm" class="modal">
+          <div class="modal-content">
+            <h4 id="cch">Confirmation</h4>
+            <p id="ccm"></p>
+          </div>
+          <div class="modal-footer">
+            <a class="modal-close waves-effect waves-red btn-flat" onClick="confirmationC()">Remove</a>
+            <a class="modal-close waves-effect waves-green btn-flat" style="float: left;">Cancel</a>
+          </div>
+        </div>
+      <script>
+        $(document).ready(function(){
+          $('.modal').modal();
+        });
+      </script>                   
 </modal>  
 <div class="row">
         <div class="col s12">
@@ -43,25 +94,25 @@
           <div id="names"></div>
         </div>
         <div id="chores" class="col s12">
-          <div class="row" style="position: relative; top: 40px">
-            <div class="input-field col s5 offset-s3">
-              <input id="chorebox" type="text">
-              <label class="active" for="chorebox">Enter a chore</label>
-            </div>
-            <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px">Add</button>
+            <div class="row" style="position: relative; top: 40px; margin-bottom: 30px">
+                <div class="input-field col s5 offset-s3" id="echore">
+                  <input id="chorebox" type="text">
+                  <label class="active" for="namebox">Enter a chore</label>
+                </div>
+                <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addC">Add</button>
+              </div>
+              <div id="chore"></div>
           </div>
         </div>
         <div id="achores" class="col s12"></div>
 <script>
+  let lnames = []
+  let lchores = []
   let neid = ""
+  let ceid = ""
   function removeN(el) {
-    let id = $(el).attr('id').substring(7, $(el).attr('id').length)
-    if (confirm("Are you sure you want to remove '" + $('#nheader' + id).html() + "' from the list of names?") == true) {
-      $('#popout' + id).fadeTo( "0.3s", 0);
-      setTimeout(function(){
-        $('#name' + id).remove()
-      }, 301);
-    }
+    neid = $(el).attr('id').substring(7, $(el).attr('id').length)
+    $('#ncm').html("Are you sure you want to remove '" + $('#nheader' + neid).html() + "' from the list of names?")
   }
   function editN(el) {
     neid = $(el).attr('id').substring(5, $(el).attr('id').length)
@@ -69,10 +120,18 @@
   }
   function finishEditingN() {
     if ($('#nameEdit').val().length > 0) {
+      lnames[neid] = $('#nameEdit').val()
       $('#nheader' + neid).html($('#nameEdit').val())
     } else {
       M.toast({html: "<span>Invalid Name</span>"});
     }
+  }
+  function confirmationN() {
+    lnames[neid] = undefined
+    $('#npopout' + neid).fadeTo( "0.3s", 0);
+    setTimeout(function(){
+      $('#name' + neid).remove()
+    }, 301);
   }
   let nid = 0
   $(document).ready(function(){
@@ -80,8 +139,9 @@
   });
   $("#addN").click(function(){
     let name = $('#namebox').val()
-    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 nsize"><ul id="popout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button onClick="removeN(this)" class="btn red waves-effect waves-light" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
+    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 changeSize"><ul id="npopout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#nconfirm" onClick="removeN(this)" class="btn red waves-effect waves-light modal-trigger" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
     if (name.length > 0) {
+      lnames.push(name)
       $('#names').append(preset)
       $('.collapsible').collapsible();
       $('.fading').fadeTo( "0.3s", 1);
@@ -94,16 +154,57 @@
       M.toast({html: "<span>Invalid Name</span>"});
     }
   });
+  function removeC(el) {
+    ceid = $(el).attr('id').substring(7, $(el).attr('id').length)
+    $('#ccm').html("Are you sure you want to remove '" + $('#cheader' + ceid).html() + "' from the list of chores?")
+  }
+  function editC(el) {
+    ceid = $(el).attr('id').substring(5, $(el).attr('id').length)
+    $('#choreEdit').val($('#cheader' + ceid).html())
+  }
+  function finishEditingC() {
+    if ($('#choreEdit').val().length > 0) {
+      lchores[ceid] = $('#choreEdit').val()
+      $('#cheader' + ceid).html($('#choreEdit').val())
+    } else {
+      M.toast({html: "<span>Invalid Chore</span>"});
+    }
+  }
+  function confirmationC() {
+    lchores[ceid] = undefined
+    $('#cpopout' + ceid).fadeTo( "0.3s", 0);
+    setTimeout(function(){
+      $('#chore' + ceid).remove()
+    }, 301);
+  }
+  let cid = 0
+$("#addC").click(function(){
+    let chore = $('#chorebox').val()
+    let preset = '<row id="chore' + cid +'"><div class="col s5 offset-s3 changeSize"><ul id="cpopout' + cid + '"class="collapsible popout fading"><li><div id="cheader' + cid + '" class="collapsible-header" style="border-width: 0px">' + chore + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#cconfirm" onClick="removeC(this)" class="btn red waves-effect waves-light modal-trigger" id="cremove' + cid + '">Remove</button><button href="#cedit"  onClick="editC(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="cedit' + cid + '">Edit</button></span></div></li></ul></div></row>'
+    if (chore.length > 0) {
+      lchores.push(chore)
+      $('#chore').append(preset)
+      $('.collapsible').collapsible();
+      $('.fading').fadeTo( "0.3s", 1);
+      cid++
+      if (cid > 9) {
+        resize()
+      }
+      resize()
+    } else {
+      M.toast({html: "<span>Invalid Chore</span>"});
+    }
+  });
   let win1 = $(window)
   function resize() {
     if (win1.width() <= 992) {
       document.getElementById("addN").className = "btn col s2 waves-effect waves-light"
       document.getElementById("ename").className = "input-field col s9"
-      $( ".nsize" ).removeClass( "s5 offset-s3" ).addClass( "s12" );
+      $( ".changeSize" ).removeClass( "s5 offset-s3" ).addClass( "s12" );
 		} else {
       document.getElementById("addN").className = "btn col s1 waves-effect waves-light"
       document.getElementById("ename").className = "input-field col s5 offset-s3"
-      $( ".nsize" ).removeClass( "s12" ).addClass( "s5 offset-s3" );
+      $( ".changeSize" ).removeClass( "s12" ).addClass( "s5 offset-s3" );
 		}
   }
 	win1.resize(function() {
