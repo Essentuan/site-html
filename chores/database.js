@@ -1,4 +1,7 @@
 // Your web app's Firebase configuration
+function filter(value) {
+  return value != undefined
+}
 let firebaseConfig = {
   apiKey: "AIzaSyAmHSuQJYzvtYS2A9XDClOXEG8AmTYPlcg",
   authDomain: "chore-tracker-d1f1a.firebaseapp.com",
@@ -35,7 +38,6 @@ function login(username, password) {
           if (doc.data().ps == password) {
             user = username
             M.toast({html: "<span>Logged in as " + username + "</span>"});
-            addFile()
             switchMain()
           } else {
             M.toast({html: "<span>Incorrect password</span>"});
@@ -61,20 +63,52 @@ function switchMain() {
   $("main").load("html/main.html"); 
   $("#background").width(0)
 }
-function addFile(username) {
+function addFile() {
   let newData = {
     chores: [],
     value: [],
     names: [],
+    assign: [],
   }
   var docRef = data.collection("Data").doc(user);
   docRef.get().then(function(doc) {
       if (doc.exists) {
-        //load()
+        load()
       } else {
         data.collection("Data").doc(user).set(newData);
       }
     }).catch(function(error) {
          console.log("error")
     });
+}
+function updateFile(names, chores, seed) {
+  let newerData = {
+    chores: chores.filter(filter),
+    value: [],
+    names: names.filter(filter),
+    seed: seed
+  }
+  var docRef = data.collection("Data").doc(user);
+  docRef.get().then(function(doc) {
+  data.collection("Data").doc(user).set(newerData);
+  }).catch(function(error) {
+    console.log("error")
+  });
+}
+function load() {
+  var docRef = data.collection("Data").doc(user);
+  docRef.get().then(function(doc) {
+    names = doc.data().names
+    chores = doc.data().chores
+    seed = doc.data().seed
+    for (x = 0; x < names.length; x++) {
+      addName(names[x])
+    }
+    for (n = 0; n < chores.length; n++) {
+      addChore(chores[n])
+    }
+    assign(seed)
+  }).catch(function(error) {
+       M.toast({html: "An error has occured, please try again later"});
+  });
 }

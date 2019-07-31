@@ -89,7 +89,7 @@
               <input id="namebox" type="text">
               <label class="active" for="namebox">Enter a name</label>
             </div>
-            <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addN">Add</button>
+            <button class="btn col s1 waves-effect waves-light blue lighten-3" style="position: relative; top: 20px" id="addN">Add</button>
           </div>
           <div id="names"></div>
         </div>
@@ -99,17 +99,71 @@
                   <input id="chorebox" type="text">
                   <label class="active" for="namebox">Enter a chore</label>
                 </div>
-                <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addC">Add</button>
+                <button class="btn col s1 waves-effect waves-light blue lighten-3" style="position: relative; top: 20px" id="addC">Add</button>
               </div>
               <div id="chore"></div>
           </div>
         </div>
-        <div id="achores" class="col s12"></div>
+        <div id="achores" class="col s12">
+          <div class="row">
+            <div class="col s10 offset-s1">
+              <div class="card">
+                <div class="card-content">
+                  <span class="card-title">Assign Chores</span>
+                  <p>This is the page where you assign the chores to the names you added earlier. You can keep clicking the 'Assign' button until you feel like you are happy on who got what chores.</p> 
+                </div>
+                <div class="card-action">
+                  <button class="btn waves-effect waves-light blue lighten-3" onClick="assign()">Assign</button>
+                  <button class="btn waves-effect waves-light green" style="float:right">Next</button>
+                </div>
+              </div>
+              <div id="assignedChores"></div>
+            </div>
+          </div>
+        </div> 
+      </div>
 <script>
+  function filter(value) {
+    return value != undefined
+  }
   let lnames = []
   let lchores = []
   let neid = ""
   let ceid = ""
+  let output = []
+  let cseed = 0
+  function addName(name) {
+    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 changeSize"><ul id="npopout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#nconfirm" onClick="removeN(this)" class="btn red waves-effect waves-light modal-trigger" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
+    if (name.length > 0) {
+      lnames.push(name)
+      $('#names').append(preset)
+      $('.collapsible').collapsible();
+      $('.fading').fadeTo( "0.3s", 1);
+      nid++
+      if (nid > 9) {
+        resize()
+      }
+      resize()
+    } else {
+      M.toast({html: "<span>Invalid Name</span>"});
+    }
+  }
+  function addChore(chore) {
+    let preset = '<row id="chore' + cid +'"><div class="col s5 offset-s3 changeSize"><ul id="cpopout' + cid + '"class="collapsible popout fading"><li><div id="cheader' + cid + '" class="collapsible-header" style="border-width: 0px">' + chore + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#cconfirm" onClick="removeC(this)" class="btn red waves-effect waves-light modal-trigger" id="cremove' + cid + '">Remove</button><button href="#cedit"  onClick="editC(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="cedit' + cid + '">Edit</button></span></div></li></ul></div></row>'
+    if (chore.length > 0) {
+      lchores.push(chore)
+      $('#chore').append(preset)
+      $('.collapsible').collapsible();
+      $('.fading').fadeTo( "0.3s", 1);
+      cid++
+      if (cid > 9) {
+        resize()
+      }
+      resize()
+    } else {
+      M.toast({html: "<span>Invalid Chore</span>"});
+    }
+  }
   function removeN(el) {
     neid = $(el).attr('id').substring(7, $(el).attr('id').length)
     $('#ncm').html("Are you sure you want to remove '" + $('#nheader' + neid).html() + "' from the list of names?")
@@ -125,6 +179,7 @@
     } else {
       M.toast({html: "<span>Invalid Name</span>"});
     }
+    updateFile(lnames, lchores, cseed)
   }
   function confirmationN() {
     lnames[neid] = undefined
@@ -132,27 +187,15 @@
     setTimeout(function(){
       $('#name' + neid).remove()
     }, 301);
+    updateFile(lnames, lchores, cseed)
   }
   let nid = 0
   $(document).ready(function(){
     $('.tabs').tabs();
   });
   $("#addN").click(function(){
-    let name = $('#namebox').val()
-    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 changeSize"><ul id="npopout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#nconfirm" onClick="removeN(this)" class="btn red waves-effect waves-light modal-trigger" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
-    if (name.length > 0) {
-      lnames.push(name)
-      $('#names').append(preset)
-      $('.collapsible').collapsible();
-      $('.fading').fadeTo( "0.3s", 1);
-      nid++
-      if (nid > 9) {
-        resize()
-      }
-      resize()
-    } else {
-      M.toast({html: "<span>Invalid Name</span>"});
-    }
+    addName($('#namebox').val())
+    updateFile(lnames, lchores, cseed)
   });
   function removeC(el) {
     ceid = $(el).attr('id').substring(7, $(el).attr('id').length)
@@ -169,6 +212,7 @@
     } else {
       M.toast({html: "<span>Invalid Chore</span>"});
     }
+    updateFile(lnames, lchores, cseed)
   }
   function confirmationC() {
     lchores[ceid] = undefined
@@ -176,33 +220,21 @@
     setTimeout(function(){
       $('#chore' + ceid).remove()
     }, 301);
+    updateFile(lnames, lchores, cseed)
   }
   let cid = 0
 $("#addC").click(function(){
-    let chore = $('#chorebox').val()
-    let preset = '<row id="chore' + cid +'"><div class="col s5 offset-s3 changeSize"><ul id="cpopout' + cid + '"class="collapsible popout fading"><li><div id="cheader' + cid + '" class="collapsible-header" style="border-width: 0px">' + chore + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#cconfirm" onClick="removeC(this)" class="btn red waves-effect waves-light modal-trigger" id="cremove' + cid + '">Remove</button><button href="#cedit"  onClick="editC(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="cedit' + cid + '">Edit</button></span></div></li></ul></div></row>'
-    if (chore.length > 0) {
-      lchores.push(chore)
-      $('#chore').append(preset)
-      $('.collapsible').collapsible();
-      $('.fading').fadeTo( "0.3s", 1);
-      cid++
-      if (cid > 9) {
-        resize()
-      }
-      resize()
-    } else {
-      M.toast({html: "<span>Invalid Chore</span>"});
-    }
+  addChore($('#chorebox').val())
+  updateFile(lnames, lchores, cseed)
   });
   let win1 = $(window)
   function resize() {
     if (win1.width() <= 992) {
-      document.getElementById("addN").className = "btn col s2 waves-effect waves-light"
+      document.getElementById("addN").className = "btn col s2 waves-effect waves-light blue lighten-3"
       document.getElementById("ename").className = "input-field col s9"
       $( ".changeSize" ).removeClass( "s5 offset-s3" ).addClass( "s12" );
 		} else {
-      document.getElementById("addN").className = "btn col s1 waves-effect waves-light"
+      document.getElementById("addN").className = "btn col s1 waves-effect waves-light blue lighten-3"
       document.getElementById("ename").className = "input-field col s5 offset-s3"
       $( ".changeSize" ).removeClass( "s12" ).addClass( "s5 offset-s3" );
 		}
@@ -210,5 +242,37 @@ $("#addC").click(function(){
 	win1.resize(function() {
     resize()
   })
+  function assign(seed) {
+    $('#assignedChores').empty()
+    ListNames = lnames.filter(filter)
+    ListChores = lchores.filter(filter)
+    output = []
+    let currentN = 0
+    if (seed == undefined) {
+      currentN = Math.floor(Math.random() * ListNames.length)
+    } else {
+      currentN = seed
+    }
+    cseed = currentN
+    for (x = 0; x < ListNames.length; x++) {
+     output[x] = [] 
+    }
+    for (i = 0; i < ListChores.length; i++) {
+      output[currentN].push(ListChores[i])
+      currentN++
+      if (currentN > (ListNames.length - 1)) {
+        currentN = 0
+      }
+    }
+    for (x = 0; x < ListNames.length; x++) {
+    $('#assignedChores').append('<div style="font-size: 40px">' + ListNames[x] + '</div>')
+      for (n = 0; n < output[x].length; n++) {
+        let carray = output[x]
+        $('#assignedChores').append('<div style="font-size: 20px; margin-left: 20px">- ' + carray[n] + '</div>')
+      }
+    }
+    updateFile(lnames, lchores, cseed)
+  } 
+  addFile()
 </script> 
             
