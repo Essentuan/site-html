@@ -75,36 +75,36 @@
         });
       </script>                   
 </modal>  
-<div class="row">
-        <div class="col s12">
-          <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#names">Names</a></li>
-            <li class="tab col s3"><a href="#chores">Chores</a></li>
-            <li class="tab col s3"><a href="#achores">Assign Chores</a></li>
-          </ul>
-        </div>
-        <div id="names" class="col s12">
+<div style="width: 100%; height: 55px; position: absolute; top: 0px;" class="blue-grey z-depth-1">
+    <h4 style="margin-left: 10px; color: white; font-weight: 100; position: relative; top: -12.2px">Chore Tracker</h4>
+    <a class="lbutton waves-effect waves-light"style="position: relative; top: -72px; float:left; margin-left: 230px" onClick="goTo('names')" >Names</a>
+    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('chores')" >Chores</a>
+    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('achores')" >Assign Chores</a>
+    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; float:right; margin-right: 10px" onClick="document.location.reload()">Logout</a>
+  </div>
+<div class="row" style="margin-top: 45px">
+        <div id="names" class="col s12 active">
           <div class="row" style="position: relative; top: 40px; margin-bottom: 30px">
             <div class="input-field col s5 offset-s3" id="ename">
               <input id="namebox" type="text">
               <label class="active" for="namebox">Enter a name</label>
             </div>
-            <button class="btn col s1 waves-effect waves-light blue lighten-3" style="position: relative; top: 20px" id="addN">Add</button>
+            <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addN">Add</button>
           </div>
           <div id="names"></div>
         </div>
-        <div id="chores" class="col s12">
+        <div id="chores" class="col s12 hidden">
             <div class="row" style="position: relative; top: 40px; margin-bottom: 30px">
                 <div class="input-field col s5 offset-s3" id="echore">
                   <input id="chorebox" type="text">
                   <label class="active" for="namebox">Enter a chore</label>
                 </div>
-                <button class="btn col s1 waves-effect waves-light blue lighten-3" style="position: relative; top: 20px" id="addC">Add</button>
+                <button class="btn col s1 waves-effect waves-light" style="position: relative; top: 20px" id="addC">Add</button>
               </div>
               <div id="chore"></div>
           </div>
         </div>
-        <div id="achores" class="col s12">
+        <div id="achores" class="col s12 hidden" >
           <div class="row">
             <div class="col s10 offset-s1">
               <div class="card">
@@ -113,8 +113,8 @@
                   <p>This is the page where you assign the chores to the names you added earlier. You can keep clicking the 'Assign' button until you feel like you are happy on who got what chores.</p> 
                 </div>
                 <div class="card-action">
-                  <button class="btn waves-effect waves-light blue lighten-3" onClick="assign()">Assign</button>
-                  <button class="btn waves-effect waves-light green" style="float:right">Next</button>
+                  <button class="btn waves-effect waves-light" onClick="assign()">Assign</button>
+                  <button class="btn waves-effect waves-light" style="float:right">Next</button>
                 </div>
               </div>
               <div id="assignedChores"></div>
@@ -123,6 +123,12 @@
         </div> 
       </div>
 <script>
+  function goTo(element) {
+    document.getElementById("names").className = "col s12 hidden"
+    document.getElementById("chores").className = "col s12 hidden"
+    document.getElementById("achores").className = "col s12 hidden"
+    document.getElementById(element).className = "col s12 active"
+  }
   function filter(value) {
     return value != undefined
   }
@@ -133,7 +139,7 @@
   let output = []
   let cseed = 0
   function addName(name) {
-    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 changeSize"><ul id="npopout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#nconfirm" onClick="removeN(this)" class="btn red waves-effect waves-light modal-trigger" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
+    let preset = '<row id="name' + nid +'"><div class="col s5 offset-s3 changeSize"><ul id="npopout' + nid + '"class="collapsible popout fading"><li><div id="nheader' + nid + '" class="collapsible-header" style="border-width: 0px">' + name + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#nconfirm" onClick="removeN(this)" class="btn red waves-effect waves-light modal-trigger" id="nremove' + nid + '">Remove</button><button href="#nedit"  onClick="editN(this)" class="btn waves-effect waves-light btn modal-trigger blue lighten-3" style="float: right" id="nedit' + nid + '">Edit</button></span></div></li></ul></div></row>'
     if (name.length > 0) {
       lnames.push(name)
       $('#names').append(preset)
@@ -149,7 +155,7 @@
     }
   }
   function addChore(chore) {
-    let preset = '<row id="chore' + cid +'"><div class="col s5 offset-s3 changeSize"><ul id="cpopout' + cid + '"class="collapsible popout fading"><li><div id="cheader' + cid + '" class="collapsible-header" style="border-width: 0px">' + chore + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#cconfirm" onClick="removeC(this)" class="btn red waves-effect waves-light modal-trigger" id="cremove' + cid + '">Remove</button><button href="#cedit"  onClick="editC(this)" class="btn waves-effect waves-light btn modal-trigger" style="float: right" id="cedit' + cid + '">Edit</button></span></div></li></ul></div></row>'
+    let preset = '<row id="chore' + cid +'"><div class="col s5 offset-s3 changeSize"><ul id="cpopout' + cid + '"class="collapsible popout fading"><li><div id="cheader' + cid + '" class="collapsible-header" style="border-width: 0px">' + chore + '</div><div class="collapsible-body" style="border-width: 0px"><span><button href="#cconfirm" onClick="removeC(this)" class="btn red waves-effect waves-light modal-trigger" id="cremove' + cid + '">Remove</button><button href="#cedit"  onClick="editC(this)" class="btn waves-effect waves-light btn modal-trigger blue lighten-3" style="float: right" id="cedit' + cid + '">Edit</button></span></div></li></ul></div></row>'
     if (chore.length > 0) {
       lchores.push(chore)
       $('#chore').append(preset)
@@ -230,11 +236,11 @@ $("#addC").click(function(){
   let win1 = $(window)
   function resize() {
     if (win1.width() <= 992) {
-      document.getElementById("addN").className = "btn col s2 waves-effect waves-light blue lighten-3"
+      document.getElementById("addN").className = "btn col s2 waves-effect waves-light"
       document.getElementById("ename").className = "input-field col s9"
       $( ".changeSize" ).removeClass( "s5 offset-s3" ).addClass( "s12" );
 		} else {
-      document.getElementById("addN").className = "btn col s1 waves-effect waves-light blue lighten-3"
+      document.getElementById("addN").className = "btn col s1 waves-effect waves-light"
       document.getElementById("ename").className = "input-field col s5 offset-s3"
       $( ".changeSize" ).removeClass( "s12" ).addClass( "s5 offset-s3" );
 		}
@@ -274,5 +280,6 @@ $("#addC").click(function(){
     updateFile(lnames, lchores, cseed)
   } 
   addFile()
+  $('#nav').hide()
 </script> 
             

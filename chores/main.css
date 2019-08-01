@@ -1,0 +1,41 @@
+.active {
+    opacity: 1;
+    transition: 1s opacity; 
+}
+.hidden {
+    opacity: 0;
+    transition: 0s opacity; 
+    height: 0px
+}
+.lbutton {
+    border-radius: 5px;
+	background-color: #607d8b;
+	border: none;
+    color: whitesmoke;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+    transition: 0.1s font-size;
+	font-size: 16px
+}
+.lbutton:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  background: whitesmoke;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+.lbutton:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+.lbutton:hover {
+    cursor: pointer
+}
