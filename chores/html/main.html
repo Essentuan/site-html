@@ -77,10 +77,10 @@
 </modal>  
 <div style="width: 100%; height: 55px; position: absolute; top: 0px;" class="blue-grey z-depth-1">
     <h4 style="margin-left: 10px; color: white; font-weight: 100; position: relative; top: -12.2px">Chore Tracker</h4>
-    <a class="lbutton waves-effect waves-light"style="position: relative; top: -72px; float:left; margin-left: 230px" onClick="goTo('names')" >Names</a>
-    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('chores')" >Chores</a>
-    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('achores')" >Assign Chores</a>
-    <a class="lbutton waves-effect waves-light" style="position: relative; top: -72px; float:right; margin-right: 10px" onClick="document.location.reload()">Logout</a>
+    <button class="lbutton waves-effect waves-light blue-grey"style="position: relative; top: -72px; float:left; margin-left: 230px" onClick="goTo('names')" >Names</button>
+    <button class="lbutton waves-effect waves-light blue-grey" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('chores')" >Chores</button>
+    <button class="lbutton waves-effect waves-light blue-grey" style="position: relative; top: -72px; margin-left: 5px" onClick="goTo('achores')">Assign Chores</button>
+    <button class="lbutton waves-effect waves-light blue-grey" style="position: relative; top: -72px; float:right; margin-right: 10px" onClick="document.location.reload()">Logout</button>
   </div>
 <div class="row" style="margin-top: 45px">
         <div id="names" class="col s12 active">
@@ -124,10 +124,21 @@
       </div>
 <script>
   function goTo(element) {
-    document.getElementById("names").className = "col s12 hidden"
-    document.getElementById("chores").className = "col s12 hidden"
-    document.getElementById("achores").className = "col s12 hidden"
-    document.getElementById(element).className = "col s12 active"
+    let ListNames1 = lnames.filter(filter)
+    let ListChores1 = lchores.filter(filter)
+    if (element != 'achores') {
+      document.getElementById("names").className = "col s12 hidden"
+      document.getElementById("chores").className = "col s12 hidden"
+      document.getElementById("achores").className = "col s12 hidden"
+      document.getElementById(element).className = "col s12 active"
+    } else if (ListNames1.length != 0 && ListChores1 != 0) {
+      document.getElementById("names").className = "col s12 hidden"
+      document.getElementById("chores").className = "col s12 hidden"
+      document.getElementById("achores").className = "col s12 hidden"
+      document.getElementById(element).className = "col s12 active"
+    } else { 
+      M.toast({html: "<span>You must have at least 1 name and chore to assign chores.</span>"});
+    }
   }
   function filter(value) {
     return value != undefined

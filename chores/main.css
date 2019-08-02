@@ -5,7 +5,10 @@
 .hidden {
     opacity: 0;
     transition: 0s opacity; 
-    height: 0px
+    height: 0px; 
+    width: 0px;
+    position: absolute!important; 
+    left: 30000px!important
 }
 .lbutton {
     border-radius: 5px;
